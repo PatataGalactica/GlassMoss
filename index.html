@@ -415,7 +415,7 @@
     const quotedTime = `"${time}"`;
     config.helixTime = quotedTime;
   
-    fetch('https://script.google.com/macros/s/AKfycbXXXXXX/exec', { // ← pon tu URL aquí
+    fetch('https://script.google.com/macros/s/AKfycbyPJ2FWxV-ryrlhD2VdyzjanK2yqBrcqzIeieIe9u3SQdNU6xeQmeSTdWoq0WbAvqQ/exec', { // ← pon tu URL aquí
       method: 'POST',
       body: JSON.stringify({ helixTime: quotedTime }),
       headers: { 'Content-Type': 'application/json' }
