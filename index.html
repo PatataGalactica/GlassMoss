@@ -458,20 +458,18 @@
   }
 
 
-
-  // Función que llama a Apps Script para leer la config
-   function fetchConfigFromAppsScript() {
-     google.script.run
-       .withSuccessHandler(function(data) {
-         console.log('Datos recibidos desde Apps Script:', data);
-         config = data;
-         loadConfigUI();
-       })
-       .withFailureHandler(function(error) {
-         alert('Error al cargar configuración: ' + error.message);
-       })
-      .leerConfiguracion();
-      
+  function fetchConfigFromAppsScript() {
+    const url = 'TU_URL_DEL_WEB_APP';
+  
+    fetch(url)
+      .then(response => response.json())
+      .then(config => {
+        console.log('Datos recibidos desde Apps Script:', config);
+        loadConfigUI(config);
+      })
+      .catch(error => {
+        alert('Error al cargar configuración: ' + error.message);
+      });
   }
 
 
