@@ -347,25 +347,21 @@
   }
 
   // Carga la configuración recibida en la UI
-  function loadConfigUI() {
-    // Configurar modo automático y mostrar/ocultar configuraciones
+  function loadConfigUI(config) {
+    console.log('🔧 Entrando en loadConfigUI con:', config);
+  
     toggleAutoMode.checked = Boolean(config.autoMode);
     toggleFade(autoLightConfig, config.autoMode);
     toggleFade(manualLightConfig, !config.autoMode);
-
-    // Número de segmentos y renderizado
+  
     selectNumSegments.value = config.numSegments || 2;
     renderSegments(parseInt(selectNumSegments.value));
-
-    // Modo manual
+  
     selectManualMode.value = config.manualMode || 'rojo';
-
-    // Hora para hélice
+  
     inputHelixTime.value = config.helixTime || '12:00';
-
-    // Actualizar cuenta atrás para cambio de agua
+  
     updateWaterChangeCountdown();
-
     ocultarPantallaCarga();
   }
 
