@@ -348,7 +348,6 @@
 
   // Carga la configuración recibida en la UI
   function loadConfigUI(config) {
-    console.log('🔧 Entrando en loadConfigUI con:', config);
   
     toggleAutoMode.checked = Boolean(config.autoMode);
     toggleFade(autoLightConfig, config.autoMode);
@@ -406,23 +405,34 @@
       .guardarLights(data);
   }
 
-
   function saveHelix() {
     const time = inputHelixTime.value;
     if (!time) {
       alert('Por favor, introduce una hora válida.');
       return;
     }
-
-    // Guardar con comillas literales
+  
     const quotedTime = `"${time}"`;
-
     config.helixTime = quotedTime;
-
-    google.script.run
-      .withSuccessHandler(showSaveMessage)
-      .guardarHelix({ helixTime: quotedTime });
+  
+    fetch('https://script.google.com/macros/s/AKfycbXXXXXX/exec', { // ← pon tu URL aquí
+      method: 'POST',
+      body: JSON.stringify({ helixTime: quotedTime }),
+      headers: { 'Content-Type': 'application/json' }
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === 'ok') {
+          showSaveMessage();
+        } else {
+          alert('❌ Error al guardar: ' + data.message);
+        }
+      })
+      .catch(err => {
+        alert('❌ Error en la conexión: ' + err.message);
+      });
   }
+
 
   // Actualiza la cuenta atrás para el cambio de agua
   function updateWaterChangeCountdown() {
