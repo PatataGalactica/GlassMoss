@@ -406,32 +406,30 @@
   }
 
   function saveHelix() {
-    const time = inputHelixTime.value;
-    if (!time) {
-      alert('Por favor, introduce una hora válida.');
-      return;
-    }
-  
-    const quotedTime = `"${time}"`;
-    config.helixTime = quotedTime;
-  
-    fetch('https://script.google.com/macros/s/AKfycbxdFhmD22CzeUEfZuXfxxnTxKYq98mrGykCsfXbpLm8R0CN_xXQrkJ9_XWSmzyOBUBu/exec', { // ← pon tu URL aquí
-      method: 'POST',
-      body: JSON.stringify({ helixTime: quotedTime }),
-      headers: { 'Content-Type': 'application/json' }
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.status === 'ok') {
-          showSaveMessage();
-        } else {
-          alert('❌ Error al guardar: ' + data.message);
-        }
-      })
-      .catch(err => {
-        alert('❌ Error en la conexión: ' + err.message);
-      });
+  const time = inputHelixTime.value;
+  if (!time) {
+    alert('Por favor, introduce una hora válida.');
+    return;
   }
+
+  fetch('https://script.google.com/macros/s/AKfycbxy-rmZK-8zBZl-OCwmfC2gyuHvhXpqE4zQuFXG-UtTCw9soM44OvGcV1G0Eb8Lxmch/exec', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ helixTime: time })
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log('✅ Guardado con éxito:', data);
+      showSaveMessage();
+    })
+    .catch(error => {
+      console.error('❌ Error al guardar:', error);
+      alert('Error al guardar configuración');
+    });
+}
+
 
 
   // Actualiza la cuenta atrás para el cambio de agua
