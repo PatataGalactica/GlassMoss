@@ -406,29 +406,30 @@
   }
 
   function saveHelix() {
-  const time = inputHelixTime.value;
-  if (!time) {
-    alert('Por favor, introduce una hora válida.');
-    return;
+    const time = inputHelixTime.value;
+    if (!time) {
+      alert('Por favor, introduce una hora válida.');
+      return;
+    }
+  
+    fetch('https://script.google.com/macros/s/AKfyc.../exec', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ helixTime: time })
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('✅ Guardado con éxito:', data);
+        showSaveMessage();
+      })
+      .catch(error => {
+        console.error('❌ Error al guardar:', error);
+        alert('Error al guardar configuración');
+      });
   }
 
-  fetch('https://script.google.com/macros/s/AKfycbxy-rmZK-8zBZl-OCwmfC2gyuHvhXpqE4zQuFXG-UtTCw9soM44OvGcV1G0Eb8Lxmch/exec', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ helixTime: time })
-  })
-    .then(response => response.json())
-    .then(data => {
-      console.log('✅ Guardado con éxito:', data);
-      showSaveMessage();
-    })
-    .catch(error => {
-      console.error('❌ Error al guardar:', error);
-      alert('Error al guardar configuración');
-    });
-}
 
 
 
