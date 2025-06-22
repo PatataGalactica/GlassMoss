@@ -487,9 +487,9 @@
   btnResetWaterChange.addEventListener('click', resetWaterChange);
 
   // Al cargar la página, llamamos a la función que obtiene config desde Apps Script
-  window.addEventListener('load', fetchConfigFromAppsScript);
-
-
+  window.addEventListener('DOMContentLoaded', () => {
+    fetchConfigFromAppsScript();
+  });
 
 
 </script>
