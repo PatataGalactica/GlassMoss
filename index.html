@@ -412,40 +412,27 @@
       return;
     }
   
-    // Guardar con comillas literales
     const quotedTime = `"${time}"`;
-  
     config.helixTime = quotedTime;
   
-    // Datos a enviar
-    const dataToSend = {
-      helixTime: quotedTime,
-      accion: 'guardarHelix' // Para que el doPost sepa qué hacer
-    };
-  
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbxbCznz9r_hB9oqr4YfIiKk2aHm0ALQEzOPyL6FpcrmAZw6WgqFGzs7yKSdavsoFxfX/exec'; 
-    const PROXY_URL = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(GAS_URL);
-  
-    fetch(PROXY_URL, {
+    fetch('https://script.google.com/macros/s/AKfycbwj4QDLpX_hwfI9n6WmtyyR79ActX69nzaWzDviuePJ5D2nAjzIzIXg_OeaC0E0T9w/exec', {
       method: 'POST',
+      body: JSON.stringify({ helixTime: quotedTime }),
       headers: {
         'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(dataToSend)
+      }
     })
-      .then(res => {
-        if (!res.ok) throw new Error('Error en la respuesta del servidor');
-        return res.text(); // o .json() si devuelves JSON
-      })
-      .then(data => {
-        console.log('✅ Guardado con éxito:', data);
-        showSaveMessage(); // Igual que antes
-      })
-      .catch(error => {
-        console.error('❌ Error al guardar:', error);
-        alert('Error al guardar los datos');
-      });
+    .then(response => response.text())
+    .then(data => {
+      console.log('✅ Guardado con éxito:', data);
+      showSaveMessage(); // función tuya
+    })
+    .catch(error => {
+      console.error('❌ Error al guardar:', error);
+      alert('Error al guardar la hora de la hélice.');
+    });
   }
+
 
 
 
